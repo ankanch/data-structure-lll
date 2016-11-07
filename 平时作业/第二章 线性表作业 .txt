@@ -1,0 +1,99 @@
+一、完成下面选择题。
+1. C D
+ 
+2. A
+ 
+ 
+3. D
+ 
+4. A
+ 
+5. C
+ 
+6．C
+ 
+二、完成下列填空题。
+1．L.elem[j] = L.elem[j-1]
+   ++L.length
+ 
+ 
+2. p->next->prior = p->prior
+ 
+ 
+三、编程题（用伪码给出算法主体）
+1. 
+设该算法所求差集为A-B且结果放入集合A中，函数执行结果应为所有属于集合A而不属于集合B的元素所构成的集合C
+首先我们肯定需要遍历集合A，对于集合A中每一个元素a，在集合B中查找元素a是否存在，如果不存在则从头开始依次加入到集合A中。如果在集合B中查找到元素a，则中断当前循环，查找A中的下一个元素是否满足，直到集合A遍历完毕为止。
+
+void Difference(SqList A, SqList B)
+{
+	count = 0;
+	for(m=0;m<A.length;m++)
+	{
+		a = A.elem[m];
+		NOMATCH = TRUE;
+		for(n=0;n<B.length;n++)
+		{
+			if(a == B.elem[n])
+			{
+				NOMATCH = FALSE;
+				break;
+			}
+		}
+		if(NOMATCH)
+		{
+			A.elem[count] = a;
+			count++;
+		}
+	}
+	A.length = count;
+}
+ 
+2.
+传入需要删除指定元素的链表L和需要删除的节点值为e的约束条件，遍历链表的每一个节点，当发现某节点M的值满足e的时候且节点M不是尾节点，便将该节点M的前一个节点的Next域指向节点M后一个元素的Next域。若节点M为尾节点，便将节点M的前一个节点的Next域设为NULL。
+
+
+typedef struct
+{
+   ElemType data;   //储存的数据
+   LinkList *next;      // 指向下一个元素
+}LinkList;
+
+
+void DelElem(LinkList &L,ElemType e)
+{
+	
+	p = L.next;
+	prior = L.next;      //储存p的前一个节点的地址，初始状态prior和p相同
+	while(1)     
+	{
+		
+		if(p->data == e)
+		{
+			if(prior == p)    //首先要判断该节点是否为紧接着头节点的节点
+			{		 //只有第一次进入循环的时候p=prior才成立
+				L.next = p->next;	//设置头节点next域为被删除节点的后一个节点
+			}
+			prior->next = p->next;     		
+			free(p);
+			p = prior;		
+		}
+		if(p->next == NULL)
+		{
+			break;
+		}
+		prior = p;
+		p++;
+	}	
+}
+
+
+算法分析：
+算法的基本操作为第一个if块里面的内容。
+在最优情况下，即给L中无任何元素满足给定约束条件e，此时基本语句执行次数为0次，相应的算法时间复杂度为T(n)=O(1)
+在最坏情况下，即，L中所有节点都满足给定约束条件e，此时算法的时间复杂度T(n)=O(n)
+
+
+
+
+
