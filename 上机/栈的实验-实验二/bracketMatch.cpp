@@ -23,7 +23,6 @@ int main(int argc,char**argv)
             cout<<"-OK:ALL MATCH"<<endl;
         }
     }
-    //DestoryStack(s);
 
     return 0;
 }
@@ -69,8 +68,10 @@ const bool BracketMatchCheck(const string seq)
     }
     if(StackEmpty(s))
     {
+        DestoryStack(s);
         return true;
     }
+    DestoryStack(s);
     return false;
 
 
