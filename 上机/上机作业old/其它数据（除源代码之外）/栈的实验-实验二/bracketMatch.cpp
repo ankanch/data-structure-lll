@@ -23,7 +23,7 @@ int main(int argc,char**argv)
             cout<<"-OK:ALL MATCH"<<endl;
         }
     }
-    DestoryStack(s);
+    //DestoryStack(s);
 
     return 0;
 }
