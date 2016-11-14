@@ -59,6 +59,17 @@ Status StackEmpty(SqStack s)
     return ERROR;
 }
 
+Status StackTraverse(SqStack s,Status (*visit)(SElemType e))
+{
+    while(!StackEmpty(s))
+    {
+        char ppp;
+        Pop(s,ppp);
+        visit(ppp);
+    }
+    return OK;
+}
+
 Status DestoryStack(SqStack &s)
 {
     free(s.base);

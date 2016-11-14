@@ -4,8 +4,6 @@
 
 using namespace std;
 
-const bool BracketMatchCheck(const string seq);
-
 int main(int argc,char**argv)
 {
     SqStack s;
