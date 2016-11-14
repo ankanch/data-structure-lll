@@ -4,12 +4,15 @@
 
 using namespace std;
 
+string line = "";
+string data = "";
+Status visit(SElemType e);
+
 int main(int argc,char**argv)
 {
     SqStack s;
     InitStack(s);
     char ch = '\0';
-    string data = "";
     cout<<"line edit application\nCtrl+Z = EXIT"<<endl;
     while(!cin.eof())
     {
@@ -29,14 +32,11 @@ int main(int argc,char**argv)
                     Push(s,ch);
             }
         }
-        string line = "";
-        while(!StackEmpty(s))
-        {
-            char ppp;
-            Pop(s,ppp);
-            line=ppp + line;
-        }
+        
+        StackTraverse(s,visit);
         data += line;
+        line = "";
+
         ClearStack(s);
         if(!cin.eof())
         {
@@ -48,4 +48,8 @@ int main(int argc,char**argv)
     return 0;
 }
 
+Status visit(SElemType e)
+{
+    line=e + line;
+}
 

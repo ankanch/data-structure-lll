@@ -25,4 +25,4 @@ int StackLength(SqStack s);
 Status GetTop(SqStack s,SElemType &e);
 Status Push(SqStack &s,SElemType e);
 Status Pop(SqStack &s,SElemType &e);
-Status StackTraverse(SqStack s,Status (*visit)());
+Status StackTraverse(SqStack s,Status (*visit)(SElemType e));
