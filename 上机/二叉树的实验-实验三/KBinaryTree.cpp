@@ -29,7 +29,7 @@ Status DestoryBiTree(BiTree &T)
 {
     if(T != NULL)
     {
-        cout<<T->data<<endl;
+        //cout<<T->data<<endl;
         if( T->lchild != NULL )
         {
             DestoryBiTree(T->lchild);
@@ -41,3 +41,23 @@ Status DestoryBiTree(BiTree &T)
         free(T);
     }
 }
+
+Status PrintElement(TElemType &e)
+{
+    cout<<e;
+    return OK;
+}
+
+Status PreOrderTraverse(BiTree &T,Status(*Visit)(TElemType &e))
+{
+    if( T!= NULL )
+    {
+        Visit(T->data);
+        PreOrderTraverse(T->lchild,Visit);
+        PreOrderTraverse(T->rchild,Visit);
+    }
+    return OK;
+}
+Status InOrderTraverse(BiTree &T,Status(*Visit)(TElemType &e));
+Status PostOrderTraverse(BiTree &T,Status(*Visit)(TElemType &e));
+Status LevelOrderTraverse(BiTree &T,Status(*Visit)(TElemType &e));
