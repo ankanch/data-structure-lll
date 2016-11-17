@@ -1,5 +1,6 @@
 #include"KBinaryTree.h"
-#include"KStack.h"
+
+SqStack S;
 
 Status CreateBiTree(BiTree &T)
 {
@@ -97,7 +98,92 @@ Status PostOrderTraverse(BiTree &T,Status(*Visit)(TElemType &e))
     }
     return OK;
 }
-Status LevelOrderTraverse(BiTree &T,int level,Status(*Visit)(TElemType &e))
+Status LevelTraverse(BiTree &T,int level,Status(*Visit)(TElemType &e))
 {
+    //thinking.... 
+}
 
+Status InOrderTraverseNoRecursion(BiTree &T,Status(*Visit)(TElemType &e))
+{
+    SElemType p;
+    InitStack(S);
+    Push(S,T);
+    while(!StackEmpty(S))
+    {
+        while( GetTop(S,p) && p )
+        {
+            Push(S,p->lchild);
+        }
+        Pop(S,p);
+        if(!StackEmpty(S))
+        {
+            Pop(S,p);
+            if(!Visit(p->data))
+            {
+                return ERROR;
+            }
+            Push(S,p->rchild);
+        }
+    }
+    return OK;
+}
+
+//相关栈===============【为了非递归遍历】==================
+//由于g++版本问题，导致直接include 之前的KStack.h会导致重定义。故将必要代码拷贝到这里
+Status InitStack(SqStack &s)
+{
+    s.base = (SElemType*)malloc(STACK_INIT_SIZE*sizeof(SElemType));
+    if(!s.base)
+    {
+        exit(OVERFLOW);
+    }
+    s.top = s.base;
+    s.stacksize = STACK_INIT_SIZE;
+    return OK;
+}
+
+Status GetTop(SqStack s,SElemType &e)
+{
+    if(s.top == s.base)
+    {
+        return ERROR;
+    }
+    e = *(s.top-1);
+    return OK;
+}
+
+Status Push(SqStack &s,SElemType e)
+{
+    if(s.top - s.base >= s.stacksize)
+    {
+        s.base = (SElemType*)realloc(s.base,(s.stacksize+STACKINCREMENT)*sizeof(SElemType));
+    
+        if(!s.base)
+        {
+            exit(OVERFLOW);
+        }
+        s.top = s.base + s.stacksize;
+        s.stacksize += STACKINCREMENT;
+    }
+    *s.top++ = e;
+    return OK;
+}
+
+Status Pop(SqStack &s,SElemType &e)
+{
+    if(s.top == s.base)
+    {
+        return ERROR;
+    }
+    e = * --s.top;
+    return OK;
+}
+
+Status StackEmpty(SqStack s)
+{
+    if(s.top == s.base)
+    {
+        return OK;
+    }
+    return ERROR;
 }

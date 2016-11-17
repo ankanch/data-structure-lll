@@ -16,10 +16,11 @@ Chengdu University of Information Technology
     Author:Long Zhang
     Student ID:2015051152
     E-mail: kanchisme@gmail.com
-    Blog:  http://lucky1965.xyz
+    Blog:  http://akakanch.com
 
     Compile Envirement:
                     Ubuntu 16.04 LTS
                     g++ 5.4
+					g++ 2.3 (windows)
                     VS Code 
 ************************************/
