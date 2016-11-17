@@ -25,4 +25,4 @@ Status DestoryBiTree(BiTree &T);
 Status PreOrderTraverse(BiTree &T,Status(*Visit)(TElemType &e));
 Status InOrderTraverse(BiTree &T,Status(*Visit)(TElemType &e));
 Status PostOrderTraverse(BiTree &T,Status(*Visit)(TElemType &e));
-Status LevelOrderTraverse(BiTree &T,Status(*Visit)(TElemType &e));
+Status LevelOrderTraverse(BiTree &T,int level,Status(*Visit)(TElemType &e));

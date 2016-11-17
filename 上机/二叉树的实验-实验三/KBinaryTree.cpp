@@ -1,4 +1,5 @@
 #include"KBinaryTree.h"
+#include"KStack.h"
 
 Status CreateBiTree(BiTree &T)
 {
@@ -29,7 +30,6 @@ Status DestoryBiTree(BiTree &T)
 {
     if(T != NULL)
     {
-        //cout<<T->data<<endl;
         if( T->lchild != NULL )
         {
             DestoryBiTree(T->lchild);
@@ -38,6 +38,7 @@ Status DestoryBiTree(BiTree &T)
         {
             DestoryBiTree(T->rchild);
         }
+        //cout<<T->data<<endl;
         free(T);
     }
 }
@@ -50,14 +51,53 @@ Status PrintElement(TElemType &e)
 
 Status PreOrderTraverse(BiTree &T,Status(*Visit)(TElemType &e))
 {
-    if( T!= NULL )
+    if( T != NULL)
     {
         Visit(T->data);
-        PreOrderTraverse(T->lchild,Visit);
-        PreOrderTraverse(T->rchild,Visit);
+        if(!PreOrderTraverse(T->lchild,Visit))
+        {
+            return ERROR;
+        }
+        if(!PreOrderTraverse(T->rchild,Visit))
+        {
+            return ERROR;
+        } 
     }
     return OK;
 }
-Status InOrderTraverse(BiTree &T,Status(*Visit)(TElemType &e));
-Status PostOrderTraverse(BiTree &T,Status(*Visit)(TElemType &e));
-Status LevelOrderTraverse(BiTree &T,Status(*Visit)(TElemType &e));
+Status InOrderTraverse(BiTree &T,Status(*Visit)(TElemType &e))
+{
+    if( T != NULL)
+    {
+        if(!InOrderTraverse(T->lchild,Visit))
+        {
+            return ERROR;
+        }
+        Visit(T->data);
+        if(!InOrderTraverse(T->rchild,Visit))
+        {
+            return ERROR;
+        } 
+    }
+    return OK;
+}
+Status PostOrderTraverse(BiTree &T,Status(*Visit)(TElemType &e))
+{
+    if( T != NULL)
+    {
+        if(!PostOrderTraverse(T->lchild,Visit))
+        {
+            return ERROR;
+        }
+        if(!PostOrderTraverse(T->rchild,Visit))
+        {
+            return ERROR;
+        }
+        Visit(T->data); 
+    }
+    return OK;
+}
+Status LevelOrderTraverse(BiTree &T,int level,Status(*Visit)(TElemType &e))
+{
+
+}
