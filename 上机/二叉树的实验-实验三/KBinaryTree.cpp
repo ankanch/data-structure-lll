@@ -3,8 +3,12 @@
 Status CreateBiTree(BiTree &T)
 {
     TElemType ch = 0;
-    cin>>ch;
-    if( ch=='#' )
+    cin.get(ch);
+    if(ch == '\n')
+    {
+        cin.get(ch);
+    }
+    if( ch==' ' )
     {
         T = NULL;
     }
@@ -25,9 +29,7 @@ Status DestoryBiTree(BiTree &T)
 {
     if(T != NULL)
     {
-        free(T);
-    }
-    else{
+        cout<<T->data<<endl;
         if( T->lchild != NULL )
         {
             DestoryBiTree(T->lchild);
@@ -36,5 +38,6 @@ Status DestoryBiTree(BiTree &T)
         {
             DestoryBiTree(T->rchild);
         }
+        free(T);
     }
 }

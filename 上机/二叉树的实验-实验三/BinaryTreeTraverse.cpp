@@ -6,7 +6,7 @@ using namespace std;
 int main(int argc,char **argv)
 {
     cout<<">>>enter teaverse sequence then application will set up a Binary Tress satisfied.\n\n(>>>via Recursion<<<)\n"<<endl;
-    cout<<">>>Enter here( # for terminate input):";
+    cout<<">>>Enter here(* for null ):";
     BiTree preT;
     CreateBiTree(preT);
 

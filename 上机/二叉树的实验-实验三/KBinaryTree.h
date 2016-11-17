@@ -16,6 +16,7 @@ typedef struct BiTNode{
 }BiTNode,*BiTree;
 
 Status CreateBiTree(BiTree &T);  //先序建立二叉树
+Status InitBiTree(BiTree &T);  //初始化BiTree（设置变量为0和NULL）
 Status DestoryBiTree(BiTree &T);
 
 
