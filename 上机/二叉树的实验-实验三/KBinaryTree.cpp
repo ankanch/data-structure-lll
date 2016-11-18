@@ -1,6 +1,7 @@
 #include"KBinaryTree.h"
-
+//全局变量
 SqStack S;
+queue<BiTree> lq;   //用于层次遍历的队列
 
 Status CreateBiTree(BiTree &T)
 {
@@ -98,9 +99,30 @@ Status PostOrderTraverse(BiTree &T,Status(*Visit)(TElemType &e))
     }
     return OK;
 }
-Status LevelTraverse(BiTree &T,int level,Status(*Visit)(TElemType &e))
+Status LevelTraverse(BiTree &T,int &count,Status(*Visit)(TElemType &e))
 {
     //thinking.... 
+    if( count == 0 )  //说明是第一次
+    {
+        lq.push(T);
+    }
+    if(!lq.empty())
+    {
+        BiTree head = lq.front();
+        lq.pop();
+        if( head != NULL)
+        {
+            Visit(head->data);
+            lq.push(head->lchild);
+            lq.push(head->rchild);
+            LevelTraverse(T,++count,Visit);
+        }
+        LevelTraverse(T,++count,Visit);
+    }
+    else
+    {
+        return OK;
+    }
 }
 
 Status InOrderTraverseNoRecursion(BiTree &T,Status(*Visit)(TElemType &e))

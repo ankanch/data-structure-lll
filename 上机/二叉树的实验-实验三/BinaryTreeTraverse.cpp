@@ -16,7 +16,8 @@ int main(int argc,char **argv)
     cout<<"\n>>>now result for PostOrderTraverse():\n\t\t\t\t\t";
     PostOrderTraverse(preT,PrintElement);
     cout<<"\n>>>now result for LevelTraverse():\n\t\t\t\t\t";
-    LevelTraverse(preT,2,PrintElement);
+    int count = 0;
+    LevelTraverse(preT,count,PrintElement);
     cout<<"\n>>>call DestoryBITree()"<<endl;
     DestoryBiTree(preT);
     cout<<">>>resource cleaned"<<endl;
