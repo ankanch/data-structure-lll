@@ -26,7 +26,9 @@ Status DestoryBiTree(BiTree &T);
 Status PreOrderTraverse(BiTree &T,Status(*Visit)(TElemType &e));
 Status InOrderTraverse(BiTree &T,Status(*Visit)(TElemType &e));
 Status PostOrderTraverse(BiTree &T,Status(*Visit)(TElemType &e));
-Status LevelTraverse(BiTree &T,int &count,Status(*Visit)(TElemType &e));
+Status LevelTraverse(BiTree &T,Status(*Visit)(TElemType &e));
+int GetBiHeight(BiTree &T);  
+Status PrintSpecficLevel(BiTree &T,int level,Status(*Visit)(TElemType &e));
 //非递归
 Status InOrderTraverseNoRecursion(BiTree &T,Status(*Visit)(TElemType &e));
 

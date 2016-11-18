@@ -1,7 +1,8 @@
 #include"KBinaryTree.h"
-//全局变量
+//ȫ�ֱ���
 SqStack S;
-queue<BiTree> lq;   //用于层次遍历的队列
+queue<BiTree> lq;   //���ڲ��α����Ķ���
+int level;
 
 Status CreateBiTree(BiTree &T)
 {
@@ -99,30 +100,57 @@ Status PostOrderTraverse(BiTree &T,Status(*Visit)(TElemType &e))
     }
     return OK;
 }
-Status LevelTraverse(BiTree &T,int &count,Status(*Visit)(TElemType &e))
+
+//下面的3个函数用于层次遍历
+
+int GetBiHeight(BiTree &T)
 {
-    //thinking.... 
-    if( count == 0 )  //说明是第一次
+    if (T==NULL)
     {
-        lq.push(T);
-    }
-    if(!lq.empty())
-    {
-        BiTree head = lq.front();
-        lq.pop();
-        if( head != NULL)
-        {
-            Visit(head->data);
-            lq.push(head->lchild);
-            lq.push(head->rchild);
-            LevelTraverse(T,++count,Visit);
-        }
-        LevelTraverse(T,++count,Visit);
+        return 0;
     }
     else
     {
-        return OK;
+        int lh = GetBiHeight(T->lchild);
+        int rh = GetBiHeight(T->rchild);
+        if (lh > rh)
+        {
+            return(lh+1);
+        }
+        else 
+        {
+            return(rh+1);
+        }
     }
+}
+
+Status PrintSpecficLevel(BiTree &T,int level,Status(*Visit)(TElemType &e))
+{
+    if (T == NULL)
+    {
+        return ERROR;
+    }
+    if (level == 1)
+    {
+        Visit(T->data);
+    }
+    else if (level > 1)
+    {
+        PrintSpecficLevel(T->lchild, level-1,Visit);
+        PrintSpecficLevel(T->rchild, level-1,Visit);
+    }
+    return OK;
+}
+
+Status LevelTraverse(BiTree &T,Status(*Visit)(TElemType &e))
+{
+    int h = GetBiHeight(T);
+    for (int i=1; i<=h; i++)
+    {
+        PrintSpecficLevel(T, i,Visit);
+        cout<<endl;
+    }
+    return OK;
 }
 
 Status InOrderTraverseNoRecursion(BiTree &T,Status(*Visit)(TElemType &e))
@@ -150,8 +178,8 @@ Status InOrderTraverseNoRecursion(BiTree &T,Status(*Visit)(TElemType &e))
     return OK;
 }
 
-//相关栈===============【为了非递归遍历】==================
-//由于g++版本问题，导致直接include 之前的KStack.h会导致重定义。故将必要代码拷贝到这里
+//����ջ===============��Ϊ�˷ǵݹ�������==================
+//����g++�汾���⣬����ֱ��include ֮ǰ��KStack.h�ᵼ���ض��塣�ʽ���Ҫ���뿽��������
 Status InitStack(SqStack &s)
 {
     s.base = (SElemType*)malloc(STACK_INIT_SIZE*sizeof(SElemType));
