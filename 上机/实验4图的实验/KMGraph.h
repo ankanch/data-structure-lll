@@ -10,7 +10,7 @@ using namespace std;
 typedef int Status;
 typedef unsigned int VRType;
 typedef int InfoType; 
-typedef char VertexType;
+typedef int VertexType;
 typedef enum{DG,DN,UDG,UDN} GraphKind; //有向图，无向网，无向图，无向网
 typedef struct ArcCell{
     VRType adj;  //VRType是顶点关系类型。对无权图，用1或0
@@ -29,3 +29,6 @@ Status CreateGraph(KMGraph &G);
 Status CreateUDN(KMGraph &G);    //构造无向网
 int LocateVex(KMGraph &G,VertexType v); //定位顶点v在图中的位置，如果没有，返回-1
 Status Input(InfoType & it);        //输入
+Status visit(int v);
+int FirstAdjVex(KMGraph G,VertexType v);  //返回第一个相邻的顶点
+int NextAdjVex(KMGraph G,VertexType v,VertexType w);    //返回v相对于w的下一个邻接顶点

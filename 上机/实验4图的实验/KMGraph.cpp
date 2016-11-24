@@ -4,7 +4,8 @@ Status CreateGraph(KMGraph &G)
 {
     //采用数组（邻接矩阵）表示法构造图G
     cout<<"enter kind of graph(DG->0,DN->1,UDG->2,UDN->3):";
-    int kind =  cin.get();
+    int kind;
+    cin>>kind;
     G.kind =  (GraphKind)kind;
     switch(G.kind)
     {
@@ -26,6 +27,7 @@ Status CreateUDN(KMGraph &G)    //构造无向网
     int incinfo = 0;
     cin>>G.vexnum>>G.arcnum>>incinfo;
     cout<<"start construct UDN Graph..."<<endl;
+    cout<<"please enter vertex value up to  "<<G.vexnum<<"times:"<<endl;
     for(int i=0;i<G.vexnum;i++)     //构造顶点向量
     {   
         char ch = cin.get();
@@ -42,6 +44,7 @@ Status CreateUDN(KMGraph &G)    //构造无向网
                 G.arcs[j][k] = {INFINITY,NULL};
             }
         }
+        cout<<"please enter v1 v2 and w uo tp "<<G.vexnum<<"times:"<<endl;
         for(int j=0;j<G.vexnum;j++) //构造邻接矩阵
         {
             VertexType v1,v2;   //顶点
@@ -61,6 +64,13 @@ Status CreateUDN(KMGraph &G)    //构造无向网
 
 int LocateVex(KMGraph &G,VertexType v) //定位顶点v在图中的位置，如果没有，返回-1
 {
+    for(int i=0;i<G.vexnum;i++)
+    {
+        if(G.vexs[i] == v)
+        {
+            return i;
+        }
+    }
     return ERROR;
 }
 
@@ -68,4 +78,19 @@ Status Input(InfoType & it)        //输入
 {
     cin>>it;
     return OK;
+}
+
+Status visit(int v)
+{
+    cout<<v<<" ";
+    return OK;
+}
+
+int FirstAdjVex(KMGraph G,VertexType v)  //返回第一个相邻的顶点
+{
+    return -1;
+}
+int NextAdjVex(KMGraph G,VertexType v,VertexType w)    //返回v相对于w的下一个邻接顶点
+{
+    return 0;
 }
