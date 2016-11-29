@@ -203,6 +203,42 @@ Status PreOrderTraverseNoRecursion(BiTree &T,Status(*Visit)(TElemType &e))
     return OK;
 }
 
+
+Status InOrderTraverseNoRecursion(BiTree &T,Status(*Visit)(TElemType &e))
+{
+    SElemType p;
+    InitStack(S);
+    Push(S,T);
+    BiTree  cur=NULL,pre=NULL;
+    while(!StackEmpty(S))
+    {
+        while( GetTop(S,p) && p )
+        {
+            if((cur->lchild==NULL&&cur->rchild==NULL)||(pre!=NULL&&(pre==cur->lchild||pre==cur->rchild)))
+            {
+                if(!Visit(p->data))
+                {
+                    return ERROR;
+                }
+                s.pop();
+                pre=cur; 
+            }
+            else
+            {
+
+            }
+            Push(S,p->lchild);
+        }
+        Pop(S,p);
+        if(!StackEmpty(S))
+        {
+            Pop(S,p);
+            Push(S,p->rchild);
+        }
+    }
+    return OK;
+}
+
 //����ջ===============��Ϊ�˷ǵݹ�������==================
 //����g++�汾���⣬����ֱ��include ֮ǰ��KStack.h�ᵼ���ض��塣�ʽ���Ҫ���뿽��������
 Status InitStack(SqStack &s)

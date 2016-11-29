@@ -26,7 +26,7 @@ int GetBiHeight(BiTree &T);
 Status PrintSpecficLevel(BiTree &T,int level,Status(*Visit)(TElemType &e));
 Status InOrderTraverseNoRecursion(BiTree &T,Status(*Visit)(TElemType &e));
 Status PreOrderTraverseNoRecursion(BiTree &T,Status(*Visit)(TElemType &e));
-Status PreOrderTraverseNoRecursion(BiTree &T,Status(*Visit)(TElemType &e))
+//Status PostOrderTraverseNoRecursion(BiTree &T,Status(*Visit)(TElemType &e))
 //相关栈===============【为了非递归遍历】==================
 //由于g++版本问题，导致直接include 之前的KStack.h会导致重定义。故将必要代码拷贝到这里
 typedef int Status;
