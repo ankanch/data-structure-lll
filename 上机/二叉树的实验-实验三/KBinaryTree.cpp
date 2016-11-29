@@ -153,9 +153,7 @@ Status LevelTraverse(BiTree &T,Status(*Visit)(TElemType &e))
     return OK;
 }
 
-
-
-Status PreOrderTraverseNoRecursion(BiTree &T,Status(*Visit)(TElemType &e))
+Status InOrderTraverseNoRecursion(BiTree &T,Status(*Visit)(TElemType &e))
 {
     SElemType p;
     InitStack(S);
@@ -167,10 +165,35 @@ Status PreOrderTraverseNoRecursion(BiTree &T,Status(*Visit)(TElemType &e))
             Push(S,p->lchild);
         }
         Pop(S,p);
-        if(!Visit(p->data))
+        if(!StackEmpty(S))
         {
-            return ERROR;
+            Pop(S,p);
+            if(!Visit(p->data))
+            {
+                return ERROR;
+            }
+            Push(S,p->rchild);
         }
+    }
+    return OK;
+}
+
+Status PreOrderTraverseNoRecursion(BiTree &T,Status(*Visit)(TElemType &e))
+{
+    SElemType p;
+    InitStack(S);
+    Push(S,T);
+    while(!StackEmpty(S))
+    {
+        while( GetTop(S,p) && p )
+        {
+            if(!Visit(p->data))
+            {
+                return ERROR;
+            }
+            Push(S,p->lchild);
+        }
+        Pop(S,p);
         if(!StackEmpty(S))
         {
             Pop(S,p);
