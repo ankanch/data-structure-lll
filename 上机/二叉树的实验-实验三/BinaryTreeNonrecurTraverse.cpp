@@ -11,6 +11,8 @@ int main(int argc,char **argv)
     CreateBiTree(preT);
     cout<<"\n>>>now result for InOrderTraverse()->None Recursion:\n\t\t\t\t\t\t\t";
     InOrderTraverseNoRecursion(preT,PrintElement);
+    cout<<"\n>>>now result for PreOrderTraverse()->None Recursion:\n\t\t\t\t\t\t\t";
+    PreOrderTraverseNoRecursion(preT,PrintElement);
     cout<<"\n>>>call DestoryBITree()"<<endl;
     DestoryBiTree(preT);
     cout<<">>>resource cleaned"<<endl;

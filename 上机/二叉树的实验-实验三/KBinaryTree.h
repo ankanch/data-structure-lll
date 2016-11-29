@@ -31,6 +31,7 @@ int GetBiHeight(BiTree &T);
 Status PrintSpecficLevel(BiTree &T,int level,Status(*Visit)(TElemType &e));
 //非递归
 Status InOrderTraverseNoRecursion(BiTree &T,Status(*Visit)(TElemType &e));
+Status PreOrderTraverseNoRecursion(BiTree &T,Status(*Visit)(TElemType &e));
 
 
 //相关栈===============【为了非递归遍历】==================
