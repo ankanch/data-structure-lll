@@ -88,6 +88,13 @@ Status visit(int v)
 
 int FirstAdjVex(KMGraph G,VertexType v)  //返回第一个相邻的顶点
 {
+    for(int i =0;i<G.vexnum;i++)
+    {
+        for(int j=0;j<G.vexnum;j++)
+        {
+            
+        }
+    }
     return -1;
 }
 int NextAdjVex(KMGraph G,VertexType v,VertexType w)    //返回v相对于w的下一个邻接顶点
