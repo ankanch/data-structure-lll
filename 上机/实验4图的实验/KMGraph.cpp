@@ -105,6 +105,7 @@ int NextAdjVex(KMGraph G,VertexType v,VertexType w)    //返回v相对于w的下
 {
     int vpos = LocateVex(G,v);
     int wpos = LocateVex(G,w);
+    //cout<<"vpos="<<vpos<<",wpos="<<wpos<<endl;
     if(vpos == -1)
     {
         return -1;
@@ -116,7 +117,7 @@ int NextAdjVex(KMGraph G,VertexType v,VertexType w)    //返回v相对于w的下
             return i;
         }
     }
-    return 0;
+    return -1;
 }
 
 void printGraph(KMGraph G)
