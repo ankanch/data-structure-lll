@@ -39,5 +39,6 @@ int main(int argc,char**argv)
 {
     KMGraph G;
     CreateGraph(G);
+    printGraph(G);
     return 0;
 }

@@ -23,19 +23,16 @@ Status CreateGraph(KMGraph &G)
 }
 Status CreateUDN(KMGraph &G)    //构造无向网
 {
-    cout<<"enter vex_num arcnum and IncInfo(space for split):";
+    cout<<"enter vex_num arcnum and IncInfo(0=null)(space for split):";
     int incinfo = 0;
     cin>>G.vexnum>>G.arcnum>>incinfo;
     cout<<"start construct UDN Graph..."<<endl;
-    cout<<"please enter vertex value up to  "<<G.vexnum<<"times:"<<endl;
+    cout<<"please enter vertex value up to "<<G.vexnum<<" times:"<<endl;
     for(int i=0;i<G.vexnum;i++)     //构造顶点向量
     {   
-        char ch = cin.get();
-        if(ch == '\n')
-        {
-            ch = cin.get();
-        }
-        G.vexs[i] == ch;
+        int dta = -1;
+        cin>>dta;
+        G.vexs[i] = dta;
     }
         for(int j=0;j<G.vexnum;j++)     //初始化邻接矩阵
         {
@@ -44,14 +41,15 @@ Status CreateUDN(KMGraph &G)    //构造无向网
                 G.arcs[j][k] = {INFINITY,NULL};
             }
         }
-        cout<<"please enter v1 v2 and w uo tp "<<G.vexnum<<"times:"<<endl;
-        for(int j=0;j<G.vexnum;j++) //构造邻接矩阵
+        cout<<"please enter v1 v2 and w up to "<<G.arcnum<<" times:"<<endl;
+        for(int j=0;j<G.arcnum;j++) //构造邻接矩阵
         {
             VertexType v1,v2;   //顶点
             VRType w;   //权值
             cin>>v1>>v2>>w;
             int x= LocateVex(G,v1);     //确定v1和v2在G中的位置
             int y = LocateVex(G,v2);
+            //cout<<"v1="<<v1<<",v2="<<v2<<",w="<<w<<",x="<<x<<",y="<<y<<endl;
             G.arcs[x][y].adj = w;       //弧<v1,v2>的权值
             if(incinfo == 1)            //若弧含有相关信息则输入
             {
@@ -64,6 +62,7 @@ Status CreateUDN(KMGraph &G)    //构造无向网
 
 int LocateVex(KMGraph &G,VertexType v) //定位顶点v在图中的位置，如果没有，返回-1
 {
+    //cout<<"in func LocateVexVex("<<v<<")G.vexnum="<<G.vexnum<<endl;
     for(int i=0;i<G.vexnum;i++)
     {
         if(G.vexs[i] == v)
@@ -71,7 +70,7 @@ int LocateVex(KMGraph &G,VertexType v) //定位顶点v在图中的位置，如�
             return i;
         }
     }
-    return ERROR;
+    return -1;
 }
 
 Status Input(InfoType & it)        //输入
@@ -108,7 +107,7 @@ int NextAdjVex(KMGraph G,VertexType v,VertexType w)    //返回v相对于w的下
     int wpos = LocateVex(G,w);
     if(vpos == -1)
     {
-        return ERROR;
+        return -1;
     }
     for(int i =wpos+1;i<G.vexnum;i++)
     {
@@ -118,4 +117,32 @@ int NextAdjVex(KMGraph G,VertexType v,VertexType w)    //返回v相对于w的下
         }
     }
     return 0;
+}
+
+void printGraph(KMGraph G)
+{
+    cout<<"======== Graph Data Begin======="<<endl;
+    cout<<"=Vertxs of Graph:"<<endl;
+    for(int i =0 ;i<G.vexnum;i++)
+    {
+        cout<<G.vexs[i]<<"\t";
+    }
+    cout<<endl<<"=Adjacent Martix of Graph:"<<endl;
+    for(int i=0;i<G.vexnum;i++)
+    {
+        cout<<"\t";
+        for(int j=0;j<G.vexnum;j++)
+        {
+            VRType t = G.arcs[i][j].adj;
+            //cout<<t<<endl;continue;
+            if(t == INFINITY)
+            {
+                cout<<setw(3)<<setiosflags(ios::right)<<"0";
+                continue;
+            }
+            cout<<setw(3)<<setiosflags(ios::right)<<t;
+        }
+        cout<<endl;
+    }
+    cout<<"======== Graph Data End======="<<endl;
 }
