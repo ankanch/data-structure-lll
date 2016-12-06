@@ -32,3 +32,4 @@ Status Input(InfoType & it);        //输入
 Status visit(int v);
 int FirstAdjVex(KMGraph G,VertexType v);  //返回第一个相邻的顶点
 int NextAdjVex(KMGraph G,VertexType v,VertexType w);    //返回v相对于w的下一个邻接顶点
+

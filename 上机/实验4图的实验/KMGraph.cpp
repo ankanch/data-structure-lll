@@ -86,18 +86,36 @@ Status visit(int v)
     return OK;
 }
 
-int FirstAdjVex(KMGraph G,VertexType v)  //返回第一个相邻的顶点
+int FirstAdjVex(KMGraph G,VertexType v)  //返回v的第一个相邻的顶点
 {
+    int vpos = LocateVex(G,v);
+    if(vpos == -1)
+    {
+        return -1;
+    }
     for(int i =0;i<G.vexnum;i++)
     {
-        for(int j=0;j<G.vexnum;j++)
+        if(G.arcs[vpos][i].adj != INFINITY)
         {
-            
+            return i;
         }
     }
     return -1;
 }
 int NextAdjVex(KMGraph G,VertexType v,VertexType w)    //返回v相对于w的下一个邻接顶点
 {
+    int vpos = LocateVex(G,v);
+    int wpos = LocateVex(G,w);
+    if(vpos == -1)
+    {
+        return ERROR;
+    }
+    for(int i =wpos+1;i<G.vexnum;i++)
+    {
+        if(G.arcs[vpos][i].adj != INFINITY)
+        {
+            return i;
+        }
+    }
     return 0;
 }
