@@ -36,16 +36,50 @@ void DFSTraverse(KMGraph G,Status (*Visit)(int v))
     }
 }
 
+queue<VertexType> Q;
+void BFSTraverse(KMGraph G,Status (*Visit)(int v))
+{
+    for(int v=0;v<G.vexnum;++v)
+    {
+        visited[v] = false;
+    }
+    for(int v=0;v<G.vexnum;v++)
+    {
+        if(!visited[v])
+        {
+            visited[v]=true;
+            Visit(G.vexs[v]);
+            Q.push(G.vexs[v]);
+            while(!Q.empty())
+            {
+                VertexType u = Q.front();
+                Q.pop();
+                for(int w=FirstAdjVex(G,u);w>=0;w=NextAdjVex(G,u,G.vexs[w]))
+                {
+                    if(!visited[w])
+                    {
+                        visited[w] = true;
+                        Visit(G.vexs[w]);
+                        Q.push(G.vexs[w]);
+                    }
+                }
+            }
+        }
+    }
+    
+}
+
 int main(int argc,char**argv)
 {
     KMGraph G;
     CreateGraph(G);
     printGraph(G);
-    cout<<endl<<endl<<"+start Depth_First_Search... "<<endl;
+    cout<<endl<<endl<<"+++start Depth_First_Search... "<<endl;
     cout<<"DFS : ";
     DFSTraverse(G,visit);
-    cout<<endl<<endl<<"+start Breadth_First_Search... "<<endl;
+    cout<<endl<<endl<<"+++start Breadth_First_Search... "<<endl;
     cout<<"BFS : ";
-    cout<<endl<<endl<<"done."<<endl;
+    BFSTraverse(G,visit);
+    cout<<endl<<endl<<"+++done."<<endl;
     return 0;
 }
