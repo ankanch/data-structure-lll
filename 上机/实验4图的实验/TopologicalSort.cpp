@@ -4,10 +4,16 @@
 
 using namespace std;
 
+void FindInDegree(KALGraph G,int *&indegree)
+{
+    ;
+}
+
 stack<int> S;
 Status TopologicalSort(KALGraph G)
 {
     int count = 0;
+    int *indegree = new int[MAX_VERTEX_NUM];
     FindInDegree(G,indegree);
     for(int i=0;i<G.vexnum;i++)
     {
@@ -22,7 +28,7 @@ Status TopologicalSort(KALGraph G)
         S.pop();
         cout<<i<<","<<G.vertices[i].data<<endl;
         count++;
-        for(ArcNode p = G.vertices[i].firstarc;p;p=p->nextarc)
+        for(ArcNode *p = G.vertices[i].firstarc;p;p=p->nextarc)
         {
             int k = p->adjvex;
             if(!(--indegree[k]))
@@ -31,6 +37,7 @@ Status TopologicalSort(KALGraph G)
             }
         }
     }
+    delete[] indegree;
     if(count<G.vexnum)
     {
         return ERROR;
@@ -38,9 +45,11 @@ Status TopologicalSort(KALGraph G)
     return OK;
 }
 
+
+
 int main(int argc,char**argv)
 {
-    KMGraph G;
+    KALGraph G;
     CreateGraph(G);
     printGraph(G);
     cout<<endl<<endl<<"+++start Topological Sort... "<<endl;
