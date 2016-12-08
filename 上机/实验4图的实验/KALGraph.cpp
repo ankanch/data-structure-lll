@@ -23,7 +23,7 @@ Status CreateGraph(KALGraph &G)
 }
 Status CreateUDN(KALGraph &G)    //构造无向网
 {
-    cout<<"enter vex_num arcnum and IncInfo(0=null)(space for split):";
+    cout<<"enter vex_num arcnum and IncInfo(0=nullptr)(space for split):";
     int incinfo = 0;
     cin>>G.vexnum>>G.arcnum>>incinfo;
     cout<<"start construct UDN Graph..."<<endl;
@@ -37,21 +37,21 @@ Status CreateUDN(KALGraph &G)    //构造无向网
         cout<<"please enter v1 v2 up to "<<G.arcnum<<" times:"<<endl;
         for(int j=0;j<G.arcnum;j++) //构造邻接表
         {
-            VNode v1={0,NULL},v2={0,NULL};   //顶点
-            cin>>v1.data>>v2.data;
-            int x= LocateVex(G,v1);     //确定v1和v2在G中的位置
-            int y = LocateVex(G,v2);
-            ArcNode *px = SeekToEnd(G,x);  //寻找邻接表根部
-            ArcNode *py = SeekToEnd(G,y);
-            //cout<<"v1="<<v1<<",v2="<<v2<<",w="<<w<<",x="<<x<<",y="<<y<<endl;
             ArcNode *arcx = new ArcNode;   //新的弧（放在x下的）
-            arcx->adjvex = y;
-            arcx->info = NULL;
-            arcx->nextarc = NULL;
+            arcx->info = nullptr;
+            arcx->nextarc = nullptr; 
             ArcNode *arcy = new ArcNode;   //新的弧（放在y下的）
-            arcy->adjvex = x;
-            arcy->info = NULL;
-            arcy->nextarc = NULL;
+            arcy->info = nullptr;
+            arcy->nextarc = nullptr;
+            //输入
+            cin>>arcx->adjvex>>arcy->adjvex;
+            int x= LocateVex(G,*arcx);     //确定v1和v2在G中的位置
+            int y = LocateVex(G,*arcy);
+            arcx->adjvex = y;//新的弧（放在x下的）
+            arcy->adjvex = x; //新的弧（放在y下的）
+            cout<<",x="<<x<<",y="<<y<<endl;   
+            ArcNode *px = SeekToEnd(G,arcx);  //寻找邻接表根部
+            ArcNode *py = SeekToEnd(G,arcy);
             if(incinfo == 1)            //若弧含有相关信息则输入
             {
                 Input(*(arcx->info));
@@ -63,11 +63,11 @@ Status CreateUDN(KALGraph &G)    //构造无向网
         return OK;
 }
 
-int LocateVex(KALGraph &G,VNode v) //定位顶点v在图中的位置，如果没有，返回-1
+int LocateVex(KALGraph &G,ArcNode v) //定位顶点v在图中的位置，如果没有，返回-1
 {
     for(int i=0;i<G.vexnum;i++)
     {
-        if(G.vertices[i].data == v.data)
+        if(G.vertices[i].data == v.adjvex)
         {
             return i;
         }
@@ -87,31 +87,30 @@ Status visit(int v)
     return OK;
 }
 
-int FirstAdjVex(KALGraph G,VNode v)  //返回v的第一个相邻的顶点
+Status  SeekToEnd(KALGraph G,ArcNode k)
 {
-    return -1;   
-}
-int NextAdjVex(KALGraph G,VNode v,VNode w)    //返回v相对于w的下一个邻接顶点
-{
-    return -1;
-}
-
-ArcNode * SeekToEnd(KALGraph G,int verticesIndex)
-{
-    ArcNode *anp = G.vertices[verticesIndex].firstarc;
-    while(anp != NULL)
-    {
-        anp = anp->nextarc;
-    }
-    return anp;
+    
+    return OK;
 }
 
 void printGraph(KALGraph G)
 {
     cout<<"======== Graph Data Begin======="<<endl;
     cout<<"=Vertxs of Graph:"<<endl;
-    
+    for(int i=0;i<G.vexnum;i++)
+    {
+        cout<<G.vertices[i].data<<"   ";
+    }
     cout<<endl<<"=Adjacent List of Graph:"<<endl;
-    
+    for(int i=0;i<G.vexnum;i++)
+    {
+        ArcNode *pac = G.vertices[i].firstarc;
+        cout<<G.vertices[i].data<<" :-> ";
+        while(pac != nullptr)
+        {
+            cout<<pac->adjvex<<" -> ";
+            pac = pac->nextarc;
+        }
+    }
     cout<<"======== Graph Data End======="<<endl;
 }

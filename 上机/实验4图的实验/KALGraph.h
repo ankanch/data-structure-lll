@@ -27,18 +27,16 @@ typedef struct VNode{
 }VNode,AdjList[MAX_VERTEX_NUM];
 
 typedef struct{
-    AdjList vertices;
+    AdjList vertices;    
     int vexnum,arcnum;  //图的当前顶点数和弧数
     int kind;   //图的种类和标志
 }KALGraph;
 
 Status CreateGraph(KALGraph &G);
 Status CreateUDN(KALGraph &G);    //构造无向网
-int LocateVex(KALGraph &G,VNode v); //定位顶点v在图中的位置，如果没有，返回-1
+int LocateVex(KALGraph &G,ArcNode v); //定位顶点v在图中的位置，如果没有，返回-1
 Status Input(InfoType & it);        //输入
 Status visit(int v);
-ArcNode * SeekToEnd(KALGraph G,int verticesIndex);
-int FirstAdjVex(KALGraph G,VNode v);  //返回第一个相邻的顶点
-int NextAdjVex(KALGraph G,VNode v,VNode w);    //返回v相对于w的下一个邻接顶点
+Status  SeekToEnd(KALGraph G,ArcNode k);
 //调试函数
 void printGraph(KALGraph G);
