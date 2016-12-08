@@ -33,6 +33,7 @@ Status CreateUDN(KALGraph &G)    //构造无向网
         int dta = -1;
         cin>>dta;
         G.vertices[i].data = dta;
+        G.vertices[i].firstarc = nullptr;
     }
         cout<<"please enter v1 v2 up to "<<G.arcnum<<" times:"<<endl;
         for(int j=0;j<G.arcnum;j++) //构造邻接表
@@ -49,16 +50,14 @@ Status CreateUDN(KALGraph &G)    //构造无向网
             int y = LocateVex(G,*arcy);
             arcx->adjvex = y;//新的弧（放在x下的）
             arcy->adjvex = x; //新的弧（放在y下的）
-            cout<<",x="<<x<<",y="<<y<<endl;   
-            ArcNode *px = SeekToEnd(G,arcx);  //寻找邻接表根部
-            ArcNode *py = SeekToEnd(G,arcy);
+            //cout<<",x="<<x<<",y="<<y<<endl;   
+            AddToEnd(G,arcx,x);  //接入邻接表
+            AddToEnd(G,arcy,y);
             if(incinfo == 1)            //若弧含有相关信息则输入
             {
                 Input(*(arcx->info));
                 arcy->info = arcx->info;
             }
-            px->nextarc = arcx;         //插入邻接表的数据段
-            py->nextarc = arcy;
         }
         return OK;
 }
@@ -75,6 +74,27 @@ int LocateVex(KALGraph &G,ArcNode v) //定位顶点v在图中的位置，如果�
     return -1;
 }
 
+Status  AddToEnd(KALGraph &G,ArcNode *k,int nodeindex)
+{
+    //cout<<"1 ";
+    if(G.vertices[nodeindex].firstarc == nullptr)
+    {
+        G.vertices[nodeindex].firstarc = k;
+        //cout<<endl;
+        return OK;
+    }
+    ArcNode *anp = G.vertices[nodeindex].firstarc;
+    //cout<<"2 ";
+    while(anp->nextarc != nullptr)
+    {
+        //cout<<"+ ";
+        anp = anp->nextarc;
+    }
+    anp->nextarc = k;
+    //cout<<"3 "<<endl;
+    return OK;
+}
+
 Status Input(InfoType & it)        //输入
 {
     cin>>it;
@@ -87,11 +107,7 @@ Status visit(int v)
     return OK;
 }
 
-Status  SeekToEnd(KALGraph G,ArcNode k)
-{
-    
-    return OK;
-}
+
 
 void printGraph(KALGraph G)
 {
@@ -111,6 +127,7 @@ void printGraph(KALGraph G)
             cout<<pac->adjvex<<" -> ";
             pac = pac->nextarc;
         }
+        cout<<"\b*"<<endl;
     }
     cout<<"======== Graph Data End======="<<endl;
 }

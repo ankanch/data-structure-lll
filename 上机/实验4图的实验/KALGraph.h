@@ -37,6 +37,6 @@ Status CreateUDN(KALGraph &G);    //构造无向网
 int LocateVex(KALGraph &G,ArcNode v); //定位顶点v在图中的位置，如果没有，返回-1
 Status Input(InfoType & it);        //输入
 Status visit(int v);
-Status  SeekToEnd(KALGraph G,ArcNode k);
+Status  AddToEnd(KALGraph &G,ArcNode *k,int nodeindex);
 //调试函数
 void printGraph(KALGraph G);
