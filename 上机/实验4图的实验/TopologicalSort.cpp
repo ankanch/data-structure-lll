@@ -6,7 +6,24 @@ using namespace std;
 
 void FindInDegree(KALGraph G,int *&indegree)
 {
-    ;
+    for(int i =0;i<G.vexnum;i++)
+    {
+        if(G.vertices[i].firstarc != nullptr)
+        {
+            ArcNode *anp=G.vertices[i].firstarc;
+            int x = 0;
+            while(anp->nextarc != nullptr)
+            {
+                x++;
+                anp = anp->nextarc;
+            }
+            indegree[i] = x;
+        }
+        else
+        {
+            indegree[i] = 0;
+        }
+    }
 }
 
 stack<int> S;
