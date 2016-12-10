@@ -10,23 +10,23 @@ Status CreateGraph(KALGraph &G)
     switch(G.kind)
     {
         case GraphKind::DG:
-            return 0;
+            return CreateDG(G);
         case GraphKind::DN:
             return 0;
         case GraphKind::UDG:
             return 0;
         case GraphKind::UDN:
-            return CreateUDN(G);
+            return 0;
         default:
             return ERROR;
     }
 }
-Status CreateUDN(KALGraph &G)    //构造无向网
+Status CreateDG(KALGraph &G)    //构造无向网
 {
     cout<<"enter vex_num arcnum and IncInfo(0=nullptr)(space for split):";
     int incinfo = 0;
     cin>>G.vexnum>>G.arcnum>>incinfo;
-    cout<<"start construct UDN Graph..."<<endl;
+    cout<<"start construct DG Graph..."<<endl;
     cout<<"please enter vertex value up to "<<G.vexnum<<" times:"<<endl;
     for(int i=0;i<G.vexnum;i++)     //构造顶点向量
     {   
@@ -35,13 +35,13 @@ Status CreateUDN(KALGraph &G)    //构造无向网
         G.vertices[i].data = dta;
         G.vertices[i].firstarc = nullptr;
     }
-        cout<<"please enter v1 v2 up to "<<G.arcnum<<" times:"<<endl;
+        cout<<"please enter v1 v2(v1->v2) up to "<<G.arcnum<<" times:"<<endl;
         for(int j=0;j<G.arcnum;j++) //构造邻接表
         {
-            ArcNode *arcx = new ArcNode;   //新的弧（放在x下的）
+            ArcNode *arcx = new ArcNode;   //记录v1
             arcx->info = nullptr;
             arcx->nextarc = nullptr; 
-            ArcNode *arcy = new ArcNode;   //新的弧（放在y下的）
+            ArcNode *arcy = new ArcNode;   //记录v2
             arcy->info = nullptr;
             arcy->nextarc = nullptr;
             //输入
@@ -49,10 +49,10 @@ Status CreateUDN(KALGraph &G)    //构造无向网
             int x= LocateVex(G,*arcx);     //确定v1和v2在G中的位置
             int y = LocateVex(G,*arcy);
             arcx->adjvex = y;//新的弧（放在x下的）
-            arcy->adjvex = x; //新的弧（放在y下的）
+            //arcy->adjvex = x; //新的弧（放在y下的）
             //cout<<",x="<<x<<",y="<<y<<endl;   
             AddToEnd(G,arcx,x);  //接入邻接表
-            AddToEnd(G,arcy,y);
+            //AddToEnd(G,arcy,y);
             if(incinfo == 1)            //若弧含有相关信息则输入
             {
                 Input(*(arcx->info));
@@ -124,7 +124,8 @@ void printGraph(KALGraph G)
         cout<<G.vertices[i].data<<" :-> ";
         while(pac != nullptr)
         {
-            cout<<pac->adjvex<<" -> ";
+            //cout<<pac->adjvex<<" -> ";
+            cout<<G.vertices[pac->adjvex].data<<" -> ";
             pac = pac->nextarc;
         }
         cout<<"\b*"<<endl;
