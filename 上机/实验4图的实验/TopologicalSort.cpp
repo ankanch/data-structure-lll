@@ -8,21 +8,21 @@ void FindInDegree(KALGraph G,int *&indegree)
 {
     for(int i =0;i<G.vexnum;i++)
     {
-        if(G.vertices[i].firstarc != nullptr)
+        int x=0;
+        VertexType Lookfor = G.vertices[i].data;
+        for(int j=0;j<G.vexnum;j++)
         {
-            ArcNode *anp=G.vertices[i].firstarc;
-            int x = 0;
-            while(anp->nextarc != nullptr)
-            {
-                x++;
-                anp = anp->nextarc;
-            }
-            indegree[i] = x;
+                ArcNode *anp = G.vertices[j].firstarc;
+                while( anp != nullptr)
+                {
+                    if(G.vertices[anp->adjvex].data == Lookfor)
+                    {
+                        x++;
+                    }
+                    anp = anp->nextarc;
+                }
         }
-        else
-        {
-            indegree[i] = 0;
-        }
+        indegree[i] = x;
     }
 }
 
@@ -32,6 +32,12 @@ Status TopologicalSort(KALGraph G)
     int count = 0;
     int *indegree = new int[MAX_VERTEX_NUM];
     FindInDegree(G,indegree);
+    cout<<"++Indegree Array Start++"<<endl;
+    for(int i=0;i<G.vexnum;i++)
+    {
+        cout<<indegree[i]<<"\t";
+    }
+    cout<<"\n++Indegree Array End++"<<endl;
     for(int i=0;i<G.vexnum;i++)
     {
         if(!indegree[i])
